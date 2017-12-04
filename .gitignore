@@ -1,0 +1,5 @@
+env/
+.DS_store
+.Python
+disquaire_project/.DS_store
+disquaire_project/disquaire_project/__pycache__
