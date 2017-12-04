@@ -1,0 +1,10 @@
+*** Libs to install ***
+- django
+- django-debug-toolbar
+- psycopg2 (for postgresql)
+
+*** Python version ***
+Runs with Python 3.6.3
+
+*** Database system ***
+Postgresql
