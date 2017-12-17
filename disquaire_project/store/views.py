@@ -19,11 +19,19 @@ def listing(request):
 	return HttpResponse(message)
 
 def detail(request, album_id):
+	"""Affiche le détail d'un album. Url attendue : store/{id}"""
 	id = int(album_id)
 	album = ALBUMS[id]
 	artists = " ".join([artist['name'] for artist in album['artists']])
 	message = "Le nom de l'album est {}. Il a été écrit par {}".format(album['name'], artists)
 	return HttpResponse(message)
+
+def search(request):
+	obj = str(request.GET)
+	query = request.GET['query']
+	message = "Propriété GET {} et la requête est {}".format(obj, query)
+	return HttpResponse(message)
+
 
 
 
