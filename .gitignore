@@ -1,6 +1,6 @@
 env/
 .DS_store
 .Python
+disquaire_project/store/__pycache__
 disquaire_project/.DS_store
 disquaire_project/disquaire_project/__pycache__
-disquaire_project/store/__pycache__/
