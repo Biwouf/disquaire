@@ -5,3 +5,7 @@ from django.http import HttpResponse
 def index(request):
 	message = 'Salut tout le monde'
 	return HttpResponse(message)
+
+def store(request):
+	message = 'Bienvenue sur la page store'
+	return HttpResponse(message)
