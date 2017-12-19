@@ -41,11 +41,14 @@ def search(request):
 		if len(albums) == 0:
 			message = "Nous n'avons trouvé aucun album correspondant à votre recherche"
 		else:
-			albums = ["<li>{}</li>".format(album['name'] for album in albums)]
-			print(albums)
+			albums = [album['name'] for album in albums]
 			message = """
 			Voici les albums correspondant à votre recherche : 
-			<ul>{}</ul>
+			<ul>
+				<li>
+				{}
+				</li>
+			</ul>
 			""".format("</li><li>".join(albums))
 
 	return HttpResponse(message)
