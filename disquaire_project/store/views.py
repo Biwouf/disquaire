@@ -1,7 +1,7 @@
 #from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import ALBUMS, ARTISTS
+#from .models import ALBUMS, ARTISTS
 
 # Create your views here.
 def index(request):
@@ -27,6 +27,7 @@ def detail(request, album_id):
 	return HttpResponse(message)
 
 def search(request):
+<<<<<<< HEAD
 	"""Vue qui gère une recherche avec un paramètre query qui s'attend à avoir un artist"""
 	query = request.GET.get('query')
 	#message = "Propriété GET {} et la requête est {}".format(obj, query)
@@ -46,6 +47,35 @@ def search(request):
 		#	print(artist)
 
 	return HttpResponse(albums)
+=======
+	#On récupère la valeur associée au paramètre query
+	query = request.GET['query']
+	#Si la query est vide
+	if not query:
+		message = "Vous devez utilisez le paramètre query pour passer votre recherche"
+	else:
+		#On génère une liste (de dictionnaires) des albums où les artistes de l'albums correspondent à la query.
+		albums = [album for album in ALBUMS
+					if query in [artists['name'] for artists in album['artists']]]
+
+		#Si aucun résultat
+		if len(albums) == 0:
+			message = "Nous n'avons trouvé aucun album correspondant à votre recherche"
+		#
+		else:
+			#Dans le dictionnaire, on utilise seulement le nom de l'album
+			albums = [album['name'] for album in albums]
+			message = """
+			Voici les albums correspondant à votre recherche : 
+			<ul>
+				<li>
+				{}
+				</li>
+			</ul>
+			""".format("</li><li>".join(albums))
+
+	return HttpResponse(message)
+>>>>>>> ab6dab2b79d9c78ddf47fb58641f3b741b7b9c61
 
 
 
