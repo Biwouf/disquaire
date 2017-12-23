@@ -27,27 +27,6 @@ def detail(request, album_id):
 	return HttpResponse(message)
 
 def search(request):
-<<<<<<< HEAD
-	"""Vue qui gère une recherche avec un paramètre query qui s'attend à avoir un artist"""
-	query = request.GET.get('query')
-	#message = "Propriété GET {} et la requête est {}".format(obj, query)
-
-	if not query:
-		message = "Utilisez le paramètre query"
-	else:
-		#albums = [album for album in ALBUMS
-		#			if query in " ".join(artist['name'] for artist in album['artists'])]
-
-		albums = []
-		albums_def = []
-		for album in ALBUMS:
-			albums.append(album)
-
-		#for artist in albums['artists']:
-		#	print(artist)
-
-	return HttpResponse(albums)
-=======
 	#On récupère la valeur associée au paramètre query
 	query = request.GET['query']
 	#Si la query est vide
@@ -75,7 +54,6 @@ def search(request):
 			""".format("</li><li>".join(albums))
 
 	return HttpResponse(message)
->>>>>>> ab6dab2b79d9c78ddf47fb58641f3b741b7b9c61
 
 
 
