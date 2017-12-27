@@ -5,7 +5,15 @@ from .models import Album, Artist, Contact, Booking
 
 # Create your views here.
 def index(request):
-	message = 'Salut tout le monde'
+	albums = Album.objects.filter(available=True).order_by('-created_at')[:3]
+	message = """
+	Voici la liste des derniers albums disponibles : 
+	<ul>
+		<li>
+		{}
+		</li>
+	</ul>
+	""".format("</li><li>".join(album.title for album in albums))
 	return HttpResponse(message)
 
 def store(request):
