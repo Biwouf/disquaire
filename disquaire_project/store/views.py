@@ -39,21 +39,25 @@ def detail(request, album_id):
 def search(request):
 	#On récupère la valeur associée au paramètre query
 	query = request.GET['query']
-	#Si la query est vide
+	#Si la query est vide, on renvoie tous les albums
 	if not query:
-		message = "Vous devez utilisez le paramètre query pour passer votre recherche"
+		albums = Album.objects.all()
 	else:
-		#On génère une liste (de dictionnaires) des albums où les artistes de l'albums correspondent à la query.
-		albums = [album for album in ALBUMS
-					if query in [artists['name'] for artists in album['artists']]]
+		#L'attribut icontains permet de matcher une partie du texte
+		#Et rend le match insensible à la casse.
+		albums = Album.objects.filter(title__icontains=query)
 
-		#Si aucun résultat
-		if len(albums) == 0:
-			message = "Nous n'avons trouvé aucun album correspondant à votre recherche"
-		#
+		#On vérifie s'il y a une occurrence
+		if not albums.exists():
+			#Si rien, on essaye de matcher les artistes
+			albums = Album.objects.filter(artists__name__icontains=query)
+
+		#Si tjours rien page d'erreur
+		if not albums.exists():
+			message = "Désolé nous n'avons trouvé aucun résultat"
+
 		else:
-			#Dans le dictionnaire, on utilise seulement le nom de l'album
-			albums = [album['name'] for album in albums]
+			albums = [album.title for album in albums]
 			message = """
 			Voici les albums correspondant à votre recherche : 
 			<ul>
@@ -62,6 +66,27 @@ def search(request):
 				</li>
 			</ul>
 			""".format("</li><li>".join(albums))
+
+
+		#On génère une liste (de dictionnaires) des albums où les artistes de l'albums correspondent à la query.
+		#albums = [album for album in ALBUMS
+		#			if query in [artists['name'] for artists in album['artists']]]
+
+		#Si aucun résultat
+		#if len(albums) == 0:
+		#	message = "Nous n'avons trouvé aucun album correspondant à votre recherche"
+		#
+		#else:
+		#	#Dans le dictionnaire, on utilise seulement le nom de l'album
+		#	albums = [album['name'] for album in albums]
+		#	message = """
+		#	Voici les albums correspondant à votre recherche : 
+		#	<ul>
+		#		<li>
+		#		{}
+		#		</li>
+		#	</ul>
+		#	""".format("</li><li>".join(albums))
 
 	return HttpResponse(message)
 
